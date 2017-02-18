@@ -1,0 +1,150 @@
+{% extends "budget/base_templates/logged_in_user.html" %}
+{% load staticfiles %}
+{% block title %}Household Keeper > Main Page{% endblock title %}
+{% block main_content %}
+<div class="clearfix"></div>
+<p class="home"><a href="{% url 'budget:main' %}">Home</a> > <strong> Dashboard</strong></p>
+<div class="list_of_members" some_url="{% url 'budget:statistic' %}">
+    <div class="visitors">
+        <h4><span class="valueType">FAMILY</span> <strong>BALANCE</strong></h4>
+        <h3 class="balanceMain" id="balanceMain">{{user.get_family_balance}} Euro</h3>
+        <p>Tendence: UP </p>
+        <a href="#"><i class="go"></i></a>
+        <div class="clearfix"></div>
+    </div>
+    <div class="sales">
+        <h4><span class="valueType">FAMILY</span> <strong>INCOME</strong></h4>
+        <h3 class="incomeMain" id="incomeMain">{{user.get_family_income_sum}} Euro</h3>
+        <p>since <span class="firstTr">{{user.get_first_transactions_datetime.date}}</span></p>
+        <a href="{% url 'budget:search' %}?income=1"><i class="go"></i></a>
+        <div class="clearfix"></div>
+    </div>
+    <div class="users">
+        <h4><span class="valueType">FAMILY</span> <strong>OUTCOME</strong></h4>
+        <h3 class="outcomeMain" id="outcomeMain">{{user.get_family_outcome_sum}} Euro</h3>
+        <p>since <span class="firstTr">{{user.get_first_transactions_datetime.date}}</span></p>
+        <a href="{% url 'budget:search' %}?outcome=1"><i class="go"></i></a>
+        <div class="clearfix"></div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+<div class="clearfix"></div>
+<div class="cd-tabs">
+    <nav>
+        <ul class="cd-tabs-navigation">
+            <li><a data-content="public"  href="#0" class="selected fashion2 mainPage">Shared Budget <i> </i></a></li>
+            <li><a data-content="private" href="#0" class="fashion1 mainPage">Private Budget<i> </i></a></li>
+            <div class="clearfix"></div>
+        </ul> 
+    </nav>
+    <ul class="cd-tabs-content">
+        <li data-content="public" class="selected">
+            <div class="top-men-public">
+                <table class="outercontainer">
+                    <tr>
+                        <th class="rwd-outer">
+                            Income
+                        </th>
+                        <th class="rwd-outer">
+                            Outcome
+                        </th>
+                    </tr>
+                    <tr>                                   
+                        <td class="container">
+                            {% if user.get_last_public_incomes %}
+                            <table class="income presenter rwd-table">
+                                <tr class="rwd">
+                                    <th class="rwd">Date</th>
+                                    <th class="rwd">Source</th>
+                                    <th class="rwd">Amount</th>                                                    
+                                </tr>
+                                {% for transaction in user.get_last_public_incomes %}
+                                    {% include "budget/base_templates/main_page_transactions.html" %}
+                                {% endfor %}                    
+                            </table>
+                            {% else %}
+                            <div class="empty_result">
+                                <span>There is nothing to show :(</span>    
+                            </div>
+                            {% endif %}
+                        </td>
+                        <td class="container">
+                            {% if user.get_last_public_incomes %}
+                            <table class="outcome presenter rwd-table">
+                                <tr>
+                                    <th class="rwd">Date</th>
+                                    <th class="rwd-outcome">Purpose</th>
+                                    <th class="rwd">Amount</th>
+                                </tr>
+                                {% for transaction in user.get_last_public_outcomes %}
+                                    {% include "budget/base_templates/main_page_transactions.html" %}
+                                {% endfor %}                   
+                            </table>
+                            {% else %}
+                            <div class="empty_result">
+                                <span>There is nothing to show :(</span>    
+                            </div>
+                            {% endif %}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </li>
+        <li data-content="private">
+            <div class="top-men-private">
+                <table class="outercontainer">
+                    <tr>
+                        <th class="rwd-outer">
+                            Income
+                        </th>
+                        <th class="rwd-outer">
+                            Outcome
+                        </th>
+                    </tr>
+                    <tr>                                   
+                        <td class="container">
+                            {% if user.get_last_private_incomes %}
+                            <table class="income presenter rwd-table">
+                                <tr class="rwd">
+                                    <th class="rwd">Date</th>
+                                    <th class="rwd">Source</th>
+                                    <th class="rwd">Amount</th>                                                    
+                                </tr>
+                                {% for transaction in user.get_last_private_incomes %}
+                                    {% include "budget/base_templates/main_page_transactions.html" %}
+                                {% endfor %}                    
+                            </table>
+                            {% else %}
+                            <div class="empty_result">
+                                <span>There is nothing to show :(</span>    
+                            </div>
+                            {% endif %}
+                        </td>
+                        <td class="container">
+                            {% if user.get_last_private_incomes %}
+                            <table class="outcome presenter rwd-table">
+                                <tr>
+                                    <th class="rwd">Date</th>
+                                    <th class="rwd-outcome">Purpose</th>
+                                    <th class="rwd">Amount</th>
+                                </tr>
+                                {% for transaction in user.get_last_private_outcomes %}
+                                    {% include "budget/base_templates/main_page_transactions.html" %}
+                                {% endfor %}                   
+                            </table>
+                            {% else %}
+                            <div class="empty_result">
+                                <span>There is nothing to show :(</span>    
+                            </div>
+                            {% endif %}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </li>
+        <div class="clearfix"></div>
+    </ul>
+</div>
+<div class="clearfix"></div>
+
+{% endblock main_content %}

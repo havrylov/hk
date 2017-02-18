@@ -1,0 +1,80 @@
+{% extends "budget/base_templates/base_menu.html" %}
+
+{% load staticfiles %}
+{% block title %}Household Keeper - Personal settings{% endblock title %}
+{% block confirmations %}
+{% include "budget/base_templates/menu_confirmations.html" %}
+{% endblock confirmations %}
+{% block family_settings %}
+{% include "budget/base_templates/family_settings_items.html" %}
+{% endblock family_settings %} 
+{% block main_content %}
+<div class="main_content">
+    <div class='title'><h2>Set your personal settings please</h2></div>
+    <form action="{% url 'budget:save' %}" method="post" id="user_form">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td><label for="fname" title="Your first name">First Name</label></td>
+                <td><input {% if user.user.first_name != "" %}value="{{user.user.first_name}}"{% endif %} autofocus="autofocus" autocomplete="off" placeholder="first name" tabindex="5" type="text" name="fname" id="fname" title="Your first name"></td>
+                
+                
+                
+            </tr>
+            <tr>
+                <td><label for="sname" title="Your Last Name">Last Name</label></td>
+                <td><input {% if user.user.last_name != "" %}value="{{user.user.last_name}}"{% endif %} autocomplete="off" placeholder="last name" tabindex="6" type="text" name="sname" id="sname" title="Your Last Name"></td>
+            </tr>	
+            <tr>
+                <td><label for="calendar" title="When you were born">Birthdate</label></td>
+                <td><input autocomplete="off" type="date" name="birthdate" id="birthdate" readonly value="" title="When you were born" onclick="displayCalendar(document.forms[0].birthdate, 'dd.mm.yyyy', this)">
+                    <!--                        <input type="button" placeholder="birthdate" tabindex="7" name="calendar" id = "calendar" value="V" onclick="displayCalendar(document.forms[0].birthdate, 'dd.mm.yyyy', this)">-->
+                </td>
+            </tr>		
+            <tr>
+                <td><label for="cellcountry" title="Country code of your cell phone">Cell country</label></td>
+                <td><input {% if user.cellcountry != "" %}value="{{user.cellcountry}}"{% endif %} autocomplete="off" placeholder="country code" tabindex="9" type="text" name="cellcountry" id="cellcountry" title="Country code of your cell phone"></td>
+            </tr>
+            <tr>
+                <td><label for="cellarea" title="Area code of your cell phone">Cell Area</label></td>
+                <td><input {% if user.cellarea != "" %}value="{{user.cellarea}}"{% endif %} autocomplete="off" placeholder="area code" tabindex="10" type="text" name="cellarea" id="cellarea" title="Area code of your cell phone"></td>
+            </tr>
+            <tr>
+                <td><label for="cellnumber" title="Dialing number of your cell phone">Cell Number</label></td>
+                <td><input {% if user.cellnum != "" %}value="{{user.cellnum}}"{% endif %} autocomplete="off" placeholder="cell number" tabindex="11" type="text" name="cellnumber" id="cellnumber" title="Dialing number of your cell phone"></td>
+            </tr>
+            <tr>
+                <td><label for="addrcountry" title="Country where you live">Country</label></td>
+                <td><input {% if user.addrcountry != "" %}value="{{user.addrcountry}}"{% endif %} autocomplete="off" placeholder="country" tabindex="12" type="text" name="addrcountry" id="addrcountry" title="Country where you live"></td>
+            </tr>
+            <tr>
+                <td><label for="addrpostid" title="Your postal code">Zip code</label></td>
+                <td><input {% if user.addrpostid != "" %}value="{{user.addrpostid}}"{% endif %} autocomplete="off" placeholder="zip code" tabindex="13" type="text" name="addrpostid" id="addrpostid" title="Your postal code"></td>
+            </tr>
+            <tr>
+                <td><label for="addrcity" title="City or town where you live">City/Town</label></td>
+                <td><input {% if user.addrtown != "" %}value="{{user.addrtown}}"{% endif %} autocomplete="off" placeholder="city" tabindex="14" type="text" name="addrcity" id="addrcity" title="City or town where you live"></td>
+            </tr>
+            <tr>
+                <td><label for="addrstr" title="Street where you live">Street</label></td>
+                <td><input {% if user.addrstr != "" %}value="{{user.addrstr}}"{% endif %} autocomplete="off" placeholder="street" tabindex="15" type="text" name="addrstr" id="addrstr" title="Street where you live"></td>
+            </tr>
+            <tr>
+                <td><label for="addrhousenum" title="Number of the house you live">House number</label></td>
+                <td><input {% if user.addrhousenum != "" %}value="{{user.addrhousenum}}"{% endif %} autocomplete="off" placeholder="house number" tabindex="16" type="text" name="addrhousenum" id="addrhousenum" title="Number of the house you live"></td>
+            </tr>
+            <tr>
+                <td><label for="addrapt" title="Your apartments' number">Apartments</label></td>
+                <td><input {% if user.addrapt != "" %}value="{{user.addrapt}}"{% endif %} autocomplete="off" placeholder="apartments" tabindex="17" type="text" name="addrapt" id="addrapt" title="Your apartments' number"></td>
+            </tr>
+            <tr>
+                <td><label for="addradditional" title="Addition to your address">Address Addition</label></td>
+                <td><input {% if user.addradditional != "" %}value="{{user.addradditional}}"{% endif %} autocomplete="off" placeholder="addition" tabindex="18" type="text" name="addradditional" id="addardditional" title="Addition to your address"></td>
+            </tr>
+            <tr>
+                <td><input tabindex="19" type="Submit" value="Save" id="btnSubmit" title="Save changes" class="myButton"></td>                
+            </tr>	
+        </table>
+    </form>
+</div> 
+{% endblock main_content %}

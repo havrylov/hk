@@ -1,0 +1,107 @@
+/* 
+    Created on : Jul 2, 2014, 6:07:14 PM
+    Author     : thavr
+*/
+
+body {
+    margin:0;
+    padding:0;
+    border:0;			/* This removes the border around the viewport in old versions of IE */
+    width:100%;
+    /*background: url('../images/line.png');*/
+    background: url('../images/trianglify-background.svg');
+    background-attachment: fixed;
+    /*background: #FFFFEB;*/
+    /*    background:#4D94FF;*/
+/*    background:#D6EBFF;*/
+
+    min-width: 700px;   /*  Minimum width of layout - remove line if not required */
+    /* The min-width property does not work in old versions of Internet Explorer */
+    font-size:100%;
+}
+
+thead{
+    text-align: left;
+}
+tbody{
+    vertical-align: top;
+}
+
+textarea{
+    resize: none;
+}
+
+div.header_logo{
+/*    background:  url('../images/logo2_short.png');*/
+    background: url('../images/logo3.png');
+    width: 75px;
+    height: 58px;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+/*div.header_logo:hover{
+    background: url('../images/logo2.png');
+    width: 1153px;
+    height: 81px;
+}*/
+
+.imglogo{
+    width: 60%;
+    margin-top: 10px;
+}
+
+.main_content {
+    margin-left: 5%;
+    margin-right: 5%;
+    background: #FFFFEB;
+/*    background: #E8E8E8;*/
+    float: none;
+    height: 100%;
+    border-style: none;
+    border-width: 1px;
+}
+
+.output_table {
+    max-width: 80%;
+    overflow: scroll;
+    border: 0;
+}
+
+
+
+
+.myButton {
+    background: #423f42;
+    background-color:#423f42;
+    -moz-border-radius:2px;
+    -webkit-border-radius:2px;
+    border-radius:2px;
+    display:inline-block;
+    cursor: pointer;
+    color:#92979d;
+    font-family: Helvetica,sans-serif;
+    padding:5px 23px;
+    text-decoration:none;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.myButton:hover {
+    background: #000000;
+    background-color:#000000;
+}
+
+.myButton:active {
+    position:relative;
+    top:1px;
+}
+
+input.text {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    font-family: inherit;
+    font-size: inherit;
+}

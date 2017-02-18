@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<!--
+<!--
+Author: W3layouts
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+
+
+
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+    <head>
+        <title>{% block title %}{% endblock title%}</title>
+        {% include "budget/base_templates/meta_data.html" %}
+        {% include "budget/base_templates/styles.html" %}
+        {% include "budget/base_templates/scripts.html" %}
+        {% block own_scrypts%}{% endblock own_scrypts%}
+        {% block own_styles%}{% endblock own_styles%}
+    </head>
+    <body>
+        <div class="total-content">
+            {% include "budget/base_templates/navigation.html" %}
+            <div class="col-md-9 content">
+                {% include "budget/base_templates/user_menu_base.html" %}
+                {% block main_content %}
+                {% endblock main_content %}
+            </div>
+            <div class="clearfix"></div>
+            {% include "budget/base_templates/footer.html" %}
+        </div>
+        <div class="overlay"></div>        
+        <div class="overlay-message">
+            <div class="xClose"></div>
+            <div class="messageBody"></div>
+        </div>
+        <div class="modal"></div>
+    </body>
+</html>

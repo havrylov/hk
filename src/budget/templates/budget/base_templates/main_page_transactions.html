@@ -1,0 +1,27 @@
+<!--<tr class="rwd">                    
+    <td class="rwd" data-th="Date">{{transaction.transactionstime.date}}</td>
+    <td class="rwd" data-th="Source">{{transaction.purpose}}</td>
+    <td class="rwd" data-th="Amount"><a href="{% url 'budget:edit_transaction' %}/?id={{transaction.pk}}" class="iframe overlayShow">{{transaction.amount}}</a> Eur</td>
+</tr>-->
+
+
+
+
+
+{% if transaction.is_income %}
+    {% if transaction.is_private %}
+        <tr class="rwd income as_link" href="{% url 'budget:edit_private_transaction' %}/?id={{transaction.pk}}">
+    {% else %}
+        <tr class="rwd income as_link" href="{% url 'budget:edit_public_transaction' %}/?id={{transaction.pk}}">
+    {% endif %}
+{% else %}
+    {% if transaction.is_private %}
+        <tr class="rwd outcome as_link" href="{% url 'budget:edit_private_transaction' %}/?id={{transaction.pk}}">
+    {% else %}
+        <tr class="rwd income as_link" href="{% url 'budget:edit_public_transaction' %}/?id={{transaction.pk}}">
+    {% endif %}
+{% endif %}
+        <td class="rwd" data-th="Date">{{transaction.transactionstime.date}}</td>
+        <td class="rwd" data-th="Purpose/Source">{{transaction.purpose}}</td>
+        <td class="rwd"  data-th="Amount">{{transaction.amount}} Eur</td>
+    </tr>

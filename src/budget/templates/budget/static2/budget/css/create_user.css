@@ -1,0 +1,59 @@
+
+/* style the password meter */
+.passMeter-bad{color:#FF0000;}
+.passMeter-low{color:#E66C2C;}
+.passMeter-good{color:#2D98F3;}
+.passMeter-strong{color:#006400;}
+
+/*style the form*/
+
+
+
+.title{
+    margin-left: auto;
+    margin-right: auto;
+    /*background:#E8E8E8;*/
+}
+
+/* Header styles */
+
+.header{
+    /*background-color: #4D94FF;*/
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+.main_row{
+    
+}
+
+/*.header:hover{
+    background-color: #4D94FF;
+}*/
+
+/* Footer styles */
+.success {
+    color: green;
+}
+.failure{
+    color: red;
+}
+.footer {
+    clear: both;
+    float: left;
+    width: 100%;
+    height: 30px;
+    border-top: 1px solid #000;
+    background: #E8E8E8;
+}
+
+.footer p {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding: 4px;
+}
+
+th {
+    text-align: left;
+}

@@ -1,0 +1,54 @@
+{% if search_function %}
+{% load staticfiles %}
+<script src="{% static 'budget/scripts/jquery.paginate.js' %}" type="text/javascript"></script>
+<script>
+    $(document).ready(function (c) {
+        $(".overlayShow, .as_link").click(function (e) {
+            showClickAsLink(e, this);
+        });
+//        $("#search_result").paginate({
+//            start: 1,
+//            display: 5,
+//            border: false,
+//            text_color: '#888',
+//            background_color: '#EEE',
+//            text_hover_color: 'black',
+//            background_hover_color: '#CFCFCF'
+//        });
+    });
+</script>
+<table class="presenter rwd-table">
+    <thead>
+        <tr class="rwd">
+            <th class="rwd">Date</th>
+            <th class="rwd">Purpose/Source</th>
+            <th class="rwd">Amount</th>                                                    
+        </tr>
+    </thead>
+    <tbody id="search_result">
+        {% for transaction in search_function %}
+        {% if transaction.is_income %}
+            {% if transaction.is_private %}
+                <tr class="rwd income as_link" href="{% url 'budget:edit_private_transaction' %}/?id={{transaction.pk}}">
+            {% else %}
+                <tr class="rwd income as_link" href="{% url 'budget:edit_public_transaction' %}/?id={{transaction.pk}}">
+            {% endif %}
+        {% else %}
+            {% if transaction.is_private %}
+                <tr class="rwd outcome as_link" href="{% url 'budget:edit_private_transaction' %}/?id={{transaction.pk}}">
+            {% else %}
+                <tr class="rwd income as_link" href="{% url 'budget:edit_public_transaction' %}/?id={{transaction.pk}}">
+            {% endif %}
+        {% endif %}
+            <td class="rwd" data-th="Date">{{transaction.transactionstime.date}}</td>
+            <td class="rwd" data-th="Purpose/Source">{{transaction.purpose}}</td>
+            <td class="rwd"  data-th="Amount">{{transaction.amount}} Eur</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<div class="empty_result">
+    <span>There is nothing to show :(</span>    
+</div>
+{% endif %}

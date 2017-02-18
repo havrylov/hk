@@ -1,0 +1,95 @@
+{% if search_function %}
+{% load staticfiles %}
+<script>
+    $(document).ready(function (c) {
+        $(".overlayShow, .as_link").click(function (e) {
+            showClickAsLink(e, this);
+        });
+//        $("#search_result").paginate({
+//            start: 1,
+//            display: 5,
+//            border: false,
+//            text_color: '#888',
+//            background_color: '#EEE',
+//            text_hover_color: 'black',
+//            background_hover_color: '#CFCFCF'
+//        });
+    });
+</script>
+<div class="cd-tabs">
+    <nav>
+        <ul class="cd-tabs-navigation">
+            <li><a data-content="public"  href="javascript:void(0)" class="selected fashion2">Shared Budget <i> </i></a></li>
+            <li><a data-content="private" href="javascript:void(0)" class="fashion1">Private Budget<i> </i></a></li>
+            <div class="clearfix"></div>
+        </ul> 
+    </nav>
+    <ul class="cd-tabs-content">
+        <li data-content="public" class="selected">
+            <div class="top-men-public">
+                <table class="presenter rwd-table">
+                    <thead>
+                        <tr class="rwd">
+                            <th class="rwd">Date</th>
+                            <th class="rwd">Purpose/Source</th>
+                            <th class="rwd">Amount</th>                                                    
+                        </tr>
+                    </thead>
+                    <tbody id="search_result_public">
+                        {% for transaction_set in search_function %}
+                            {% for transaction in transaction_set %}
+                                {% if transaction.is_public %}
+                                    {% if transaction.is_income %}
+                                        <tr class="rwd income as_link" href="{% url 'budget:edit_public_transaction' %}/?id={{transaction.pk}}">                                
+                                    {% else %}
+                                        <tr class="rwd outcome as_link" href="{% url 'budget:edit_public_transaction' %}/?id={{transaction.pk}}">
+                                    {% endif %}                                
+                                            <td class="rwd" data-th="Date">{{transaction.transactionstime.date}}</td>
+                                            <td class="rwd" data-th="Purpose/Source">{{transaction.purpose}}</td>
+                                            <td class="rwd"  data-th="Amount">{{transaction.amount}} Eur</td>
+                                        </tr>
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </li>
+        <li data-content="private">
+            <div class="top-men-private">
+                <table class="presenter rwd-table">
+                    <thead>
+                        <tr class="rwd">
+                            <th class="rwd">Date</th>
+                            <th class="rwd">Purpose/Source</th>
+                            <th class="rwd">Amount</th>                                                    
+                        </tr>
+                    </thead>
+                    <tbody id="search_result_private">
+                        {% for transaction_set in search_function %}
+                            {% for transaction in transaction_set %}
+                                {% if transaction.is_private %}
+                                    {% if transaction.is_income %}                                
+                                        <tr class="rwd income as_link" href="{% url 'budget:edit_private_transaction' %}/?id={{transaction.pk}}">                                    
+                                    {% else %}
+                                        <tr class="rwd outcome as_link" href="{% url 'budget:edit_private_transaction' %}/?id={{transaction.pk}}">                                
+                                    {% endif %}                                
+                                            <td class="rwd" data-th="Date">{{transaction.transactionstime.date}}</td>
+                                            <td class="rwd" data-th="Purpose/Source">{{transaction.purpose}}</td>
+                                            <td class="rwd"  data-th="Amount">{{transaction.amount}} Eur</td>
+                                        </tr>
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </li>
+        <div class="clearfix"></div>
+    </ul>
+</div>
+{% else %}
+<div class="empty_result">
+    <span>There is nothing to show :(</span>    
+</div>
+{% endif %}

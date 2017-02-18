@@ -1,0 +1,10 @@
+{% extends "budget/base_templates/base.html" %}
+{% block title %}Log out{% endblock title %}
+{% block misc %}
+    <meta http-equiv="refresh" content="3;URL={% url 'budget:login' %}">
+{% endblock misc %}
+{% block main_content %}
+        <div>You are successfully logged out!</div>
+        <div>Shortly you will be redirected to our start page.</div>
+        
+{% endblock main_content %}

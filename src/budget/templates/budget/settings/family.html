@@ -1,0 +1,42 @@
+{% extends "budget/base_templates/base_menu.html" %}
+
+{% load staticfiles %}
+{% block title %}Household Keeper{% endblock title %}
+{% block confirmations %}
+{% include "budget/base_templates/menu_confirmations.html" %}
+{% endblock confirmations %}
+{% block family_settings %}
+{% include "budget/base_templates/family_settings_items.html" %}
+{% endblock family_settings %} 
+{% block main_content %}
+<h2>Here you can change the names you'd like to use for your family members</h2>
+<form action="{% url 'budget:save_family_settings' %}" method="post" id="family_form">
+    {% csrf_token %}
+    <table>
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Full name (if provided)</th>
+                <th>How would you like to call me;)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user, pseudo in user.get_all_pseudos_except_mine.iteritems%}
+            <tr>
+                <td><input type="text" class="text" name='user' value="{{user.user.email}}"></td>
+                <td><input type="text" class="text" name='fullname' value="{{user.get_full_name}}"></td>
+                <td>
+                    {% if pseudo%}
+                    <input type="text" name='pseudo' value="{{pseudo.pseudonym}}" placeholder="How'd you like to call me?">
+                    {% else %}
+                    <input type="text" name='pseudo' value="" placeholder="How'd you like to call me?">
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <input type="Submit" value="Save" id="btnSubmit" title="Save changes" class="myButton">
+</form>
+
+{% endblock main_content %}

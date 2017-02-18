@@ -1,0 +1,6 @@
+{% if not user.emailisconfirmed %}
+<li> <a class="send_confirmation" href = '{% url 'budget:email_resend' %}'> <span> Re-send email address confirmation </span></a> </li>    
+{% endif %}
+{% if not user.famidconfirmed%}
+<li> <a class="send_confirmation" href = '{% url 'budget:family_resend' %}'> <span> Re-send family confirmation </span></a> </li>    
+{% endif %}

@@ -1,0 +1,17 @@
+{% extends "budget/base_templates/basic.html" %}
+
+{% load staticfiles %}
+        {% block styles %}
+            <link rel="stylesheet" type="text/css" href="{% static 'budget/css/base_style.css' %}" />
+        {% endblock styles%}
+        {% block header %}
+        <div class="header">
+            <header class='header'>
+                <a href="{% url 'budget:main' %}">
+                    <div class="header_logo"></div>
+                    <!--<img class='imglogo' src="{% static 'budget/images/logo2.png' %}"/>-->
+                </a>
+            </header>
+            {% block menu%}{% endblock menu%}
+        </div>
+        {% endblock header %}

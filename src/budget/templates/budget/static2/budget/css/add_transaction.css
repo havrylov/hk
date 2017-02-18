@@ -1,0 +1,59 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jul 9, 2014, 7:28:24 AM
+    Author     : thavr
+*/
+
+body {
+    margin:0;
+    padding:0;
+    border:0;			/* This removes the border around the viewport in old versions of IE */
+    /* The min-width property does not work in old versions of Internet Explorer */
+    font-size:100%;
+}
+
+.main_content_basic {
+    background: #FFFFEB;
+/*    background: #E8E8E8;*/
+    float: none;
+    height: 100%;
+    border-style: none;
+    border-width: 1px;
+}
+
+thead{
+    text-align: center;
+}
+
+.addButton {
+    background: #423f42;
+    background-color:#423f42;
+    -moz-border-radius:2px;
+    -webkit-border-radius:2px;
+    border-radius:2px;
+    display:inline-block;
+    cursor: pointer;
+    color:#92979d;
+    font-family: Helvetica,sans-serif;
+    padding: 0 5px;
+    text-decoration:none;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+
+.addButton:hover {
+    background: #000000;
+    background-color:#000000;
+}
+
+.addButton:active {
+    position:relative;
+    top:1px;
+}
+

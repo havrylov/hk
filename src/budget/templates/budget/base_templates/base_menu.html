@@ -1,0 +1,55 @@
+{% extends "budget/base_templates/base.html" %}
+
+{% load staticfiles %}
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="{% static 'budget/css/base_style.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'budget/css/menu_styles.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'budget/css/colorbox.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'budget/css/jquery-impromptu.css' %}" />
+{% endblock styles %}
+{% block scripts %}
+<script type='text/javascript' src="{% static 'budget/scripts/jquery-1.11.1.min.js' %}"></script>
+<script type='text/javascript' src="{% static 'budget/scripts/menu_jquery.js' %}"></script>
+<script type='text/javascript' src="{% static 'budget/scripts/jquery.colorbox-min.js' %}"></script>
+<script type='text/javascript' src="{% static 'budget/scripts/main_scripts.js' %}"></script>
+<script type='text/javascript' src="{% static 'budget/scripts/jquery-impromptu.js' %}"></script>
+
+
+{% endblock scripts %}
+{% block menu %}
+<div id='cssmenu' class='align-right'>
+    <ul>
+        <li class='has-sub'><a href='#'><span>User</span></a>
+            <ul>
+                <li><a href='#'><span>Help</span></a></li>                
+                {% block confirmations %}{% endblock confirmations %}
+                <li class='has-sub'><a href='#'><span>Settings</span></a>
+                    <ul> 
+                        <li><a href="{% url 'budget:personal' %}"><span>Personal Information</span></a></li>
+                        {% block family_settings %}{% endblock family_settings %}                        
+                        <li><a href='{% url 'budget:access' %}' class='last'><span>Access data</span></a></li>
+                    </ul>
+                </li>
+                <li class='last'><a href="{% url 'budget:logout' %}"><span>Log Out</span></a></li>
+            </ul>
+        </li>     
+        <!--   <li class='has-sub'><a href='#'><span>Export</span></a>
+              <ul>
+                 <li><a href='#'><span>As PDF</span></a></li>
+                 <li><a href='#'><span>As CSV</span></a></li>
+                 <li class='last'><a href='#'><span>As Excel Spreadsheet</span></a></li>
+              </ul>
+           </li>-->
+<!--        <li class='has-sub'><a href='#'><span>Transactions</span></a>
+            <ul>
+                <li><a href="{% url 'budget:add_tr_menu' %}"><span>New</span></a></li>
+                <li><a href='#'><span>Edit</span></a></li>
+                <li class='last'><a href='#'><span>Delete</span></a></li>
+            </ul>
+        </li> -->
+        <li><a href="{% url 'budget:add_tr_menu' %}"><span>Add Transaction(s)</span></a></li>   
+        <li><a href="{% url 'budget:search' %}"><span>Search</span></a></li>   
+        <li class='active last'><a href="{% url 'budget:main' %}"><span>Home</span></a></li>
+    </ul>
+</div>
+{% endblock menu %}

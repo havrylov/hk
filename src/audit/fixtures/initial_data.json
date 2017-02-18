@@ -1,0 +1,93 @@
+[
+{
+  "pk": 1, 
+  "model": "audit.auditeventtypes", 
+  "fields": {
+    "event_type": "user_created"
+  }
+},
+{
+  "pk": 2, 
+  "model": "audit.auditeventtypes", 
+  "fields": {
+    "event_type": "user_edited"
+  }
+},
+{
+  "pk": 3, 
+  "model": "audit.auditeventtypes", 
+  "fields": {
+    "event_type": "user_deleted"
+  }
+},
+{
+  "pk": 4, 
+  "model": "audit.auditeventtypes", 
+  "fields": {
+    "event_type": "transaction_created"
+  }
+},
+{
+  "pk": 5, 
+  "model": "audit.auditeventtypes", 
+  "fields": {
+    "event_type": "transaction_edited"
+  }
+},
+{
+  "pk": 6, 
+  "model": "audit.auditeventtypes", 
+  "fields": {
+    "event_type": "transaction_deleted"
+  }
+},
+{
+  "pk": 7, 
+  "model": "audit.auditeventtypes", 
+  "fields": {
+    "event_type": "family_confirmation_sent"
+  }
+},
+{
+  "pk": 8, 
+  "model": "audit.auditeventtypes", 
+  "fields": {
+    "event_type": "family_confirmed"
+  }
+},
+{
+  "pk": 9, 
+  "model": "audit.auditeventtypes", 
+  "fields": {
+    "event_type": "email_confiration_sent"
+  }
+},
+{
+  "pk": 10, 
+  "model": "audit.auditeventtypes", 
+  "fields": {
+    "event_type": "email_confirmed"
+  }
+},
+{
+  "pk": 11, 
+  "model": "audit.auditeventtypes", 
+  "fields": {
+    "event_type": "email_confirmation_expired"
+  }
+},
+{
+  "pk": 12, 
+  "model": "audit.auditeventtypes", 
+  "fields": {
+    "event_type": "family_confirmation_expired"
+  }
+},
+{
+  "pk": 13, 
+  "model": "audit.auditeventtypes", 
+  "fields": {
+    "event_type": "unknown_event"
+  }
+}
+]

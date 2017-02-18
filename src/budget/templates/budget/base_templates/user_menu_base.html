@@ -1,0 +1,27 @@
+{% load staticfiles %}
+<div class="home-strip">
+    <div class="member">
+        <p><a href="#"><i class="men"></i></a><a href="#">{{user.get_full_name}}</a></p>
+        <div id="dd" class="wrapper-dropdown-2" tabindex="1"><span><img src="{% static 'budget/images/settings.png' %}"/></span>
+            <ul class="dropdown">
+                <li><a href="{% url 'budget:personal' %}">View/Change Personal Information</a></li>
+                <li><a href="{% url 'budget:access' %}">Change Access data</a></li>
+                <li><a href="{% url 'budget:preferences' %}">Site Preferences</a></li>
+                {% if not user.emailisconfirmed %}
+                <li> <a class="send_confirmation" href = "{% url 'budget:email_resend' %}">Re-send email address confirmation</a> </li>    
+                {% endif %}
+                {% if not user.famidconfirmed%}
+                <li> <a class="send_confirmation" href = "{% url 'budget:family_resend' %}">Re-send family confirmation</a> </li>    
+                {% endif %}
+                {% if user.is_family_not_empty %}
+                <li><a href="{% url 'budget:family_settings' %}">View/Change Family Settings</a></li>
+                {% endif %}
+                <li><a href="#">Report a problem</a></li>
+                <li><a href="{% url 'budget:logout' %}">Log Out</a></li>
+            </ul>
+        </div>                                           
+        <div class="clearfix"></div>			
+    </div>
+    <div class="clearfix"></div>	
+</div>
+<div class="clearfix"></div>

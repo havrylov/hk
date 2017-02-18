@@ -1,0 +1,14 @@
+user_created
+user_edited
+user_deleted
+transaction_created
+transaction_edited
+transaction_deleted
+family_confirmation_sent
+family_confirmed
+email_confiration_sent
+email_confirmed
+email_confirmation_expired
+family_confirmation_expired
+
+

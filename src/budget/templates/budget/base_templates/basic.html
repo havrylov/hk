@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+         <title>{% block title %}{% endblock title%}</title>
+        {% load staticfiles %}        
+        {% block styles %}{% endblock styles%}
+        {% block own_styles %}{% endblock own_styles %}
+        {% block scripts %}{% endblock scripts %}
+        {% block own_scrypts %}{% endblock own_scrypts %}
+        {% block misc %}{% endblock misc %}
+
+       
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        {% block header %}{% endblock header %}     
+        {% block main_content %}{% endblock main_content%}
+    </body>
+</html>

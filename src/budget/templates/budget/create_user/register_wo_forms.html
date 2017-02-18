@@ -1,0 +1,136 @@
+{% extends "budget/base_templates/base.html" %}
+{% block title %}Register new user{% endblock title %}
+
+{% load staticfiles %}
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="{% static 'budget/css/create_user.css' %}" />
+<link rel="stylesheet" href="../static2/budget/css/create_user.css" type="text/css">
+{% endblock styles %}
+{% block scripts %}
+<script src="{% static 'budget/scripts/jquery.js' %}"></script>
+<script src="{% static 'budget/scripts/jquery.passMeter.min.js' %}"></script>
+<script type="text/javascript">
+            $(document).ready(function(){
+    $.passMeter({
+    // Config local
+    'id_password'     :   '#password',
+            'id_result'     :   '#password-result',
+            // Msg level pass
+            'msg_bad'      :   'Extremly Weak <a href="#">Info</a>',
+            'msg_low'       :   'Weak <a href="#">Info</a>',
+            'msg_good'      :   'Middle strength',
+            'msg_strong'    :   'Strong'           });
+            $("#retypepassword").focusout(function(){
+    pw = $("#password").val();
+            rtpw = $("#retypepassword").val();
+            if (pw != rtpw) {
+    $("#password-confirmed").html("<span class='failure'>X</span>");
+    } else{
+    $("#password-confirmed").html("<span class='success'>V</span>");
+    }
+    });
+            $("#showpassword").select(function(){
+    $("#password").type("text");
+    });
+            $('#user_form').on('submit', function(e) {
+    e.preventDefault();
+            if ($("#password").val() != $("#retypepassword").val()){
+    alert("Password does not match. \nPlease retype password.");
+            $("#password").select();
+    } else{
+    this.submit();
+    }
+    });
+    });</script>
+{% endblock scripts %}
+
+{% block main_content %}
+<div class="main_content">
+    <div class='title'><h2>{{message}}</h2></div>
+    <form action="{% url 'budget:register' %}" method="post" id="user_form">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td><label for="email" title="Your email-address. It is also your username.">Email Address<small> *</small></label></td>
+                <td><input autocomplete="off" placeholder="email" tabindex="1" type="email" name="email" id="email" title="Your address for e-mails By default it will be your username as well." required></td>
+            </tr>
+            <tr>
+                <td><label for="password" title="Type desirable password here">Password<small> *</small></label></td>
+                <td><input autocomplete="off" placeholder="password" tabindex="2" type="password" name="password" id="password" title="Type desirable password here" required/></td>
+                <td><div id="password-result"></div></td>
+            </tr>
+            <tr>
+                <td><label for="retypepassword" title="Retype your desirable password">Retype password<small> *</small></label></td>
+                <td><input autocomplete="off" placeholder="retype password" tabindex="3" type="password" name="retypepassword" id="retypepassword" title="Retype your desirable password" required></td>
+                <td><div id="password-confirmed"></div></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" title="Show/Hide password" name="showpassword" id="showpassword"></td>
+                <td><label for="showpassword" title="Show/Hide password">Show/Hide password</label></td>
+            </tr>
+            <tr>
+                <td><label for="family_email" title="Family email (Actually email of the first user)">Any Family?</label></td>
+                <td><input autocomplete="off" placeholder="family email" tabindex="4" type="email" name="family_email" id="family_email" title="Email of any member of the family you are the part of"></td>
+            </tr>
+            <tr>
+                <td><label for="fname" title="Your first name">First Name</label></td>
+                <td><input autocomplete="off" placeholder="first name" tabindex="5" type="text" name="fname" id="fname" title="Your first name"></td>
+            </tr>
+            <tr>
+                <td><label for="sname" title="Your Last Name">Last Name</label></td>
+                <td><input autocomplete="off" placeholder="last name" tabindex="6" type="text" name="sname" id="sname" title="Your Last Name"></td>
+            </tr>	
+            <tr>
+                <td><label for="calendar" title="When you were born">Birthdate</label></td>
+                <td><input autocomplete="off" type="date" name="birthdate" id="birthdate" readonly value="" title="When you were born" onclick="displayCalendar(document.forms[0].birthdate, 'dd.mm.yyyy', this)">
+                    <!--                        <input type="button" placeholder="birthdate" tabindex="7" name="calendar" id = "calendar" value="V" onclick="displayCalendar(document.forms[0].birthdate, 'dd.mm.yyyy', this)">-->
+                </td>
+            </tr>		
+            <tr>
+                <td><label for="cellcountry" title="Country code of your cell phone">Country Code for cell phone</label></td>
+                <td><input autocomplete="off" placeholder="country code" tabindex="9" type="text" name="cellcountry" id="cellcountry" title="Country code of your cell phone"></td>
+            </tr>
+            <tr>
+                <td><label for="cellarea" title="Area code of your cell phone">Area Code for cell phone</label></td>
+                <td><input autocomplete="off" placeholder="area code" tabindex="10" type="text" name="cellarea" id="cellarea" title="Area code of your cell phone"></td>
+            </tr>
+            <tr>
+                <td><label for="cellnumber" title="Dialing number of your cell phone">Cell phone number</label></td>
+                <td><input autocomplete="off" placeholder="cell number" tabindex="11" type="text" name="cellnumber" id="cellnumber" title="Dialing number of your cell phone"></td>
+            </tr>
+            <tr>
+                <td><label for="addrcountry" title="Country where you live">Country</label></td>
+                <td><input autocomplete="off" placeholder="country" tabindex="12" type="text" name="addrcountry" id="addrcountry" title="Country where you live"></td>
+            </tr>
+            <tr>
+                <td><label for="addrpostid" title="Your postal code">Zip code</label></td>
+                <td><input autocomplete="off" placeholder="zip code" tabindex="13" type="text" name="addrpostid" id="addrpostid" title="Your postal code"></td>
+            </tr>
+            <tr>
+                <td><label for="addrcity" title="City or town where you live">City/Town</label></td>
+                <td><input autocomplete="off" placeholder="city" tabindex="14" type="text" name="addrcity" id="addrcity" title="City or town where you live"></td>
+            </tr>
+            <tr>
+                <td><label for="addrstr" title="Street where you live">Street</label></td>
+                <td><input autocomplete="off" placeholder="street" tabindex="15" type="text" name="addrstr" id="addrstr" title="Street where you live"></td>
+            </tr>
+            <tr>
+                <td><label for="addrhousenum" title="Number of the house you live">House number</label></td>
+                <td><input autocomplete="off" placeholder="house number" tabindex="16" type="text" name="addrhousenum" id="addrhousenum" title="Number of the house you live"></td>
+            </tr>
+            <tr>
+                <td><label for="addrapt" title="Your apartments' number">Apartments</label></td>
+                <td><input autocomplete="off" placeholder="apartments" tabindex="17" type="text" name="addrapt" id="addrapt" title="Your apartments' number"></td>
+            </tr>
+            <tr>
+                <td><label for="addradditional" title="Addition to your address">Address Addition</label></td>
+                <td><input autocomplete="off" placeholder="addition" tabindex="18" type="text" name="addradditional" id="addardditional" title="Addition to your address"></td>
+            </tr>
+            <tr>
+                <td><input tabindex="19" type="Submit" value="Register" id="btnSubmit" title="Register new user" class="myButton"></td>
+                <td><input tabindex="20" type="reset" value="Clear Form" id="clear" title="Delete all entered data" class="myButton"></td>
+            </tr>	
+        </table>
+    </form>
+</div> 
+{% endblock main_content%}

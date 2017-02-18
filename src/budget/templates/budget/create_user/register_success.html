@@ -1,0 +1,44 @@
+{% extends "budget/base_templates/base.html" %}
+{% block title %}Welcome!{% endblock title %}
+{% block main_content %}
+<div class="main_content">
+    <div class='title'><h1>Registration is successful</h1></div>
+    <div><h2>Dear {{username}},</h2></div>
+    <div class="main_text">
+        <p>
+            You are successfully registered as the user of our product. We hope that 
+            usage of our product will help you to make your life better!
+        </p>            
+        <p>
+            In order to enjoy the option our product can provide to you we need 
+            to confirm email you gave during sign-up process.
+        </p>            
+        <p>
+            This procedure is very simple. We have sent an email to the address
+            {{email}}. Just click on the link inside the email and we're done.
+        </p>            
+        <p>
+            It sometimes happens that email does not come into the mail box. In 
+            this case you need to resend the email . You can either use 
+            <a href="#">this link</a> or the link that will be always available
+            on the main screen until you confirm your email. It looks like this:
+            <img src="#" />
+        </p>            
+        <p>
+            We want to emphasize that confirming your email address is very 
+            important in order to grant more security to your account. E.g. we 
+            will send instructions to change password only to confirmed email 
+            addresses. And this is the only way we can help you in case your 
+            password is stolen or forgotten. Be safe!
+        </p>            
+        <p>
+            Sincerely yours<br>
+            The Team
+        </p>
+        <p>
+            Now you may proceed to usage of our product. Enjoy!!!
+            <a href="{% url 'budget:login' %}">Login page</a>
+        </p>
+    </div> 
+</div>
+{% endblock main_content %}

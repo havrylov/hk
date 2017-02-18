@@ -1,0 +1,52 @@
+{% extends "budget/base_templates/logged_in_user.html" %}
+
+{% load staticfiles %}
+{% block title %}Household Keeper > Search{% endblock title %}
+{% block own_scrypts%}
+<script type='text/javascript' src="{% static 'budget/scripts/myScripts.js' %}"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#filter_settings").submit(function (e)
+        {
+            var getData = $(this).serializeArray();
+            var formURL = $(this).attr("action");
+            $.ajax(
+                    {
+                        url: formURL,
+                        type: "GET",
+                        data: getData,
+                        dataType: 'html',
+                        data_outp: content,
+                        error: function (jqXHR, textStatus, errorThrown)
+                        {
+                            //if fails     
+                        }
+                    })
+                    .done(function (data_outp) {
+                        $('#search_result').html(data_outp);
+                    });
+            e.preventDefault(); //STOP default action
+            e.unbind(); //unbind. to stop multiple form submit.
+        });
+    });
+
+//function find_transactions(e) {
+//    $.ajax({type:'GET', url: '{% url "budget:filter" %}', data:$('#filter_settings').serialize(), success: function(response) {
+//        $('#search_result').html(response);
+//    }});
+//    
+//    return false;
+//}
+</script>
+{% endblock own_scrypts%}
+{% block main_content %}
+<div class="clearfix"></div>
+<p class="home"><a href="{% url 'budget:main' %}">Home</a> > <strong> Search</strong></p>
+<div class="search_header">
+    {% include "budget/search/search_header.html"%}
+</div>
+<div class="clearfix"></div>
+<div id="search_result">
+    {% include "budget/search/search_result.html"%}
+</div>
+{% endblock main_content %}

@@ -1,0 +1,129 @@
+{% extends "budget/base_templates/logged_in_user.html" %}
+
+{% load staticfiles %}
+{% block title %}Household Keeper > Access Data{% endblock title %}
+{% block own_scrypts %}
+<!--
+This script works like that. If only new email is set the script will ask the 
+current password. If password is correct then the change is applied to DB.
+Otherwise, the script must give another 2 attempts. After 3 failed attempts 
+the ability of user to change the access data will be locked until tomorrow.
+
+
+If the new password is set then the script must first check whether passwords 
+in both 'password' and 'retype password' fields are identical. If so the above
+mentioned algorithm of changes authorization is applied.
+
+If both new password and new email are changes authorization must be applied
+only once.
+
+-->
+<script type="text/javascript">
+    var getData;
+    $(document).ready(function () {
+        $("#user_form").submit(function (e) {
+            e.preventDefault(); //STOP default action
+            var new_mail_value = $("#new_email").val();
+            var new_password_value = $("#password").val();
+            var password_retype = $("#retypepassword").val();
+            if (new_mail_value == '' && new_password_value == '') {
+                swal({
+                    title: "Oops...",
+                    text: "Nothing changed - nothing saved.",
+                    imageUrl: "{% static 'budget/images/wonder_face.jpg' %}"
+                });
+                return false;
+                //$('#myformelement').append('<input type="hidden" name="myfieldname" value="myvalue" />');
+            }
+            if (new_password_value != password_retype) {
+                swal({
+                    title: "Hey...",
+                    text: "Passwords are not the same. Please retype both!",
+                    type: "warning"
+                });
+                $("#password").val("");
+                $("#retypepassword").val("");
+                return false;
+            }
+            requestConfirmationPassword();
+        });
+    });
+    function requestConfirmationPassword() {
+        var request_content = "<div class='title'><h2>Confirm current password</h2></div><div><h4><p>You are trying to change important data.</p><p>Please enter current password to confirm changes.</p></h4></div><div><input autofocus='autofocus' autocomplete='off' placeholder='current paswword' type='password' name='current_password' id='current_password' title='Current Password'></div><div><button name='submit_current_password' id='submit_current_password' type='button' onclick='iSubmit();'>Enter</button></div>"
+        $('.xClose').html("&times;");
+        $('.messageBody').html(request_content);
+        $(".overlay, .overlay-message").show();
+    }
+
+    function iSubmit() {
+        $(".overlay, .overlay-message").hide();
+        var psw = $("#current_password").val();
+        $('#user_form').append('<input type="hidden" name="conf_password" id="temp"value="' + psw + '" />');
+        var getData = $('#user_form').serializeArray();
+        var formURL = $('#user_form').attr("action");
+        var requestType = $('#user_form').attr('method');
+        $('#temp').remove();
+        $.ajax(
+                {
+                    url: formURL,
+                    type: 'POST',
+                    data: getData,
+                    dataType: 'html',
+                    data_outp: content,
+                    error: function (jqXHR, textStatus, errorThrown)
+                    {
+                        sweetAlert("Oops...", "Something went wrong!", "error");
+                        $("#new_email").val("");
+                        $("#password").val("");
+                        $("#retypepassword").val("");
+                        return false;
+                    },
+                    success: function (data_outp, textStatus, xhr) {                        
+                        var diagnose = xhr.getResponseHeader('Overflow');
+                        if (diagnose == "0") {
+                            swal("Success!", "Access data is successfully changed", "success");
+                        } else if (diagnose == "1") {
+                            sweetAlert("Failed!", "You do it too often, dude! Try tomorrow.", "error");
+                        } else if (diagnose == "-6") {
+                            sweetAlert("Failed!", "Incorrect password, dude! Another try...", "error");
+                            requestConfirmationPassword();
+                        } else {
+                            sweetAlert("Failed!", "Something strange has happened!", "error");
+                        }
+                    }
+                });
+
+    }
+</script>
+{% endblock own_scrypts %}
+{% block main_content %}
+<div class="clearfix"></div>
+<p class="home"><a href="{% url 'budget:main' %}">Home</a> > <strong> Access Data</strong></p>
+<div class="main_content">
+    <div class='title'><h2>Set your access data please</h2></div>
+    <div class='error_message'>{{error_found}}</div>
+    <form action="{% url 'budget:save_access_settings' %}" method="POST" id="user_form">
+        {% csrf_token %}
+        <table border="0">
+            {% for field in form %}
+            <tr class="main_row">                    
+                <th rowspan="2" width="35%">
+                    {{field.label_tag}}
+                </th>
+                <td width="35%">
+                    {{field.errors.as_ul}}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {{field.as_widget}}
+                </td>                    
+            </tr>
+            {% endfor %}            
+            <tr>
+                <td><input tabindex="19" autofocus="autofocus" type="Submit" value="Save" id="btnSubmit" title="Save Changes" class="myButton"></td>                                
+            </tr>	
+        </table>
+    </form>
+</div> 
+{% endblock main_content %}

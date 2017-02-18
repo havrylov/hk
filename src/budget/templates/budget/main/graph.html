@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- graph code begins here-->
+        <script type="text/javascript" src="../static2/budget/scripts/wz_jsgraphics.js"></script>
+        <script type="text/javascript" src="../static2/budget/scripts/line.js">
+
+        <!-- Line Graph script-By Balamurugan S http://www.sbmkpm.com/ //-->
+        <!-- Script featured/ available at Dynamic Drive code: http://www.dynamicdrive.com //-->
+
+        </script>    
+    <!-- graph code ends here-->
+</head>
+<body>
+    <div>TODO write content</div>
+    <div id="lineCanvas" style="overflow: auto; position:relative;height:300px;width:600px;"></div>
+
+    <script type="text/javascript">
+        var g = new line_graph();
+        g.add('28.04.2014', 5373);
+        g.add('05.05.2014', 5273);
+        g.add('12.05.2014', 5222);
+        g.add('19.05.2014', 5035);
+        g.add('26.05.2014', 4096);
+        g.add('02.06.2014', 12359);
+        g.add('09.06.2014', 12596);
+        g.add('16.06.2014', 2320);
+        g.add('23.06.2014', 2000);
+        g.add('30.06.2014', 4333);
+        g.add('07.06.2014', 4003);
+
+        g.render("lineCanvas", "Line Graph");
+    </script>
+</body>
+</html>

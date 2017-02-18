@@ -1,0 +1,50 @@
+<html>
+<head>
+	<title>Showing entries entered in the form</title>
+        <style>
+            .notempty
+            {
+                background-color: #99ff99;
+            }
+            .empty
+            {
+                background-color: #ff9999;
+            }
+        </style>
+</head>
+<body>
+	<h1>What was entered in the form:</h1>
+	<table border="1">
+		<caption>POST Data</caption>
+		{% for key, value in request.POST.iteritems%}
+			<tr>
+				<td>{{key}}</td>
+				<td>{{value}}</td>                
+					{% if value == '' %}
+                                        <td class="empty">Empty
+					{% else %}
+						<td class="notempty">Not empty
+					{% endif%}
+				</td>
+			</tr>
+		{%endfor%}
+	</table>
+	<table border="1">
+		<caption>GET Data</caption>
+		{% for key, value in request.GET.iteritems%}
+			<tr>
+				<td>{{key}}</td>
+				<td>{{value}}</td>
+					{% if value == '' %}
+                                            <td class="empty">Empty
+					{% else %}
+                                            <td class="notempty">Not empty
+					{% endif%}
+				</td>
+			</tr>
+		{%endfor%}
+	</table>
+        <h1>What did we get from computer</h1>
+        <h2>Result: {{result}} </h2>
+</body>
+</html>

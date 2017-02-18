@@ -1,0 +1,72 @@
+{% extends "budget/base_templates/base_menu.html" %}
+
+{% load staticfiles %}
+{% block title %}Household Keeper{% endblock title %}
+{% block own_scrypts%}
+<script type='text/javascript' src="{% static 'budget/scripts/myScripts.js' %}"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+    $("#filter_settings").submit(function(e)
+    {
+        var getData = $(this).serializeArray();
+        var formURL = $(this).attr("action");
+        $.ajax(
+                {
+                    url: formURL,
+                    type: "GET",
+                    data: getData,
+                    dataType: 'html',
+                    data_outp: content,
+                    
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                        //if fails     
+                    }
+                })
+                .done(function(data_outp){
+                    $('#search_result').html(data_outp);
+                });
+        e.preventDefault(); //STOP default action
+        e.unbind(); //unbind. to stop multiple form submit.
+    });    
+});
+
+//function find_transactions(e) {
+//    $.ajax({type:'GET', url: '{% url "budget:filter" %}', data:$('#filter_settings').serialize(), success: function(response) {
+//        $('#search_result').html(response);
+//    }});
+//    
+//    return false;
+//}
+</script>
+{% endblock own_scrypts%}
+{% block confirmations %}
+{% include "budget/base_templates/menu_confirmations.html" %}
+{% endblock confirmations %}
+{% block family_settings %}
+{% include "budget/base_templates/family_settings_items.html" %}
+{% endblock family_settings %} 
+{% block main_content %}
+<div class="search_header">
+    {% include "budget/search/search_header.html"%}
+</div>
+<table>
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Purpose/Source</th>
+            <th>Amount</th>    
+        </tr>
+    </thead>
+    <tbody id="search_result">
+        {% for transaction in search_function %}
+        <tr>                    
+            <td>{{transaction.transactionstime.date}}</td>
+            <td>{{transaction.purpose}}</td>
+            <td><a href="{% url 'budget:edit_transaction' %}/?id={{transaction.pk}}" class="iframe cboxElement" target="_blank">{{transaction.amount}}</a> Eur</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock main_content %}

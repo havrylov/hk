@@ -1,0 +1,40 @@
+{% extends "budget/base_templates/base.html" %}
+{% block title %}Sign in!{% endblock title %}
+
+{% load staticfiles %}
+{% block scripts%}
+<script src="{% static 'budget/scripts/jquery.js' %}"></script>
+{% endblock scripts%}
+{% block main_content%}
+<div>
+    <form action="{% url 'budget:signin' %}" method="post" id="login">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>
+                    <label for="username" title="Your username/email">Your username/email</label>
+                </td>
+                <td>
+                    <input type="text" autocomplete="on" tabindex="1" class="username" id="username" name="username" placeholder="Username/email"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="password" title="Your password">Password</label>
+                </td>
+                <td>
+                    <input type="password" autocomplete="off" tabindex="2" class="password" id="password" name="password" placeholder="Password"/>
+                </td>
+            </tr>
+            <tr>                        
+                <td>
+                    <input type="submit" tabindex="3" class="login" id="login" name="login" value="Sign in"/>
+                </td>
+                <td>
+                    <a href="{% url 'budget:newuser' %}">Join us</a>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+{% endblock main_content%}

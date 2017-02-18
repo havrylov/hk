@@ -1,0 +1,79 @@
+{% extends "budget/base_templates/base_menu.html" %}
+
+{% load staticfiles %}
+{% block title %}Household Keeper - Add transactions{% endblock title %}
+{% block own_styles%}
+<link rel="stylesheet" type="text/css" href="{% static 'budget/css/edit_transaction.css' %}" />
+{% endblock own_styles%}
+{% block own_scrypts%}
+{% endblock own_scrypts%}
+
+{% block confirmations %}
+{% include "budget/base_templates/menu_confirmations.html" %}
+{% endblock confirmations %}
+{% block family_settings %}
+{% include "budget/base_templates/family_settings_items.html" %}
+{% endblock family_settings %} 
+{% block main_content %}
+<div class="main_content">
+    <div class='title'><h2>Edit Transaction</h2></div>
+    <form action="{% url 'budget:save_changed_transaction' %}" method="post" id="user_form">
+        {% csrf_token %}
+        <table>
+            <tbody>
+                <tr>
+                    <td>
+                        <!--<span style="font-weight: bold;">Transaction </span>-->
+                    </td>   
+                    <td>
+                        <div class="text">
+                            <input type="hidden" value="{{transaction.pk}}" name="id" id="id">
+<!--                        style="font-weight: bolder;" -->
+                        </div>
+                        
+                    </td>                    
+                </tr>
+                <tr>
+                    <td>
+                        <label for="date">Date</label>                        
+                    </td>
+                
+                    <td>
+                        <input autofocus="autofocus" autocomplete="on" placeholder="Date or empty for now" type="datetime-local" name="date" id="date" title="Date of the transaction" value="{{transaction.show_local_time_presentation}}">
+                    </td>
+                    <td>
+                        <input type="button" value="Delete" class="delButton">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Purpose/Source</label>
+                    </td>
+                    <td>
+                        <input autocomplete="on" placeholder="Purpose" type="text" name="purpose" id="purpose" title="Purpose or Source" value="{{transaction.purpose}}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Amount</label>
+                    </td>
+                    <td>
+                        <input autocomplete="on" placeholder="Amount" type="number" step="0.01" name="amount" id="amount" title="Amount of the transaction" value="{{transaction.amount}}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Comment</label>
+                    </td>
+                    <td>
+                        <input  placeholder="comment" type="text" name="comment" id="comment" title="Free comment" value="{{transaction.comment}}">
+                    </td>
+                </tr>
+            <tr>
+                <td><input type="Submit" value="Save" id="btnSubmit" title="Add Transaction(s)" class="myButton"></td>                
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</div> 
+{% endblock main_content %}

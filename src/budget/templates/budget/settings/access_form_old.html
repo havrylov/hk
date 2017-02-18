@@ -1,0 +1,111 @@
+{% extends "budget/base_templates/base_menu.html" %}
+
+{% load staticfiles %}
+{% block own_styles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'budget/css/create_user.css' %}" />
+{% endblock own_styles %}
+{% block own_scrypts %}
+<!--
+This script works like that. If only new email is set the script will ask the 
+current password. If password is correct then the change is applied to DB.
+Otherwise, the script must give another 2 attempts. After 3 failed attempts 
+the user will be logged off.
+
+If the new password is set then the script must first check whether passwords 
+in both 'password' and 'retype password' fields are identical. If so the above
+mentioned algorithm of changes authorization is applied.
+
+If both new password and new email are changes authorization must be applied
+only once.
+
+-->
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#user_form").submit(function(e)
+            {
+                var new_mail_value = $("#new_email").val();
+                if (new_mail_value == '') {
+                    return true;
+                }
+                else {            
+                    var give_psw = {
+                        state0: {
+                            html:'<label for="pasword">Please confirm email change with your password</label><br /><input type="password" name="password" id="password" class="password" value=""><br />',
+                            buttons: { OK: true, Cancel: false },
+                            focus: 1,
+                            submit:function(ev,v,m,f){
+                                        if(v){
+                                            if (f.password == '111'){
+                                                $.prompt.close(); 
+                                                ev.submit();
+                                                return true;
+                                            }
+                                            else {
+                                                jQuery.prompt.goToState('state1');
+                                                return false;
+                                            }
+                                        }                                        
+                                    }       
+                        },
+                        state1: {
+                            html: 'Sorry. the password is wrong. try again',
+                            buttons: { 'Try Again': true, Cancel: false},
+                            focus: 1,
+                            submit:function(ev,v,m,f){ 
+                                if(v){
+                                    jQuery.prompt.goToState('state0');
+                                    return false;
+                                }
+                                
+                                
+                            }
+                        }
+                    };
+                    $.prompt(give_psw);
+                    e.preventDefault(); //STOP default action
+                    e.unbind(); //unbind. to stop multiple form submit.                    
+                }     
+        
+            });
+    })
+</script>
+{% endblock own_scrypts %}
+{% block title %}Household Keeper - Access Data{% endblock title %}
+{% block confirmations %}
+{% include "budget/base_templates/menu_confirmations.html" %}
+{% endblock confirmations %}
+{% block family_settings %}
+{% include "budget/base_templates/family_settings_items.html" %}
+{% endblock family_settings %} 
+{% block main_content %}
+
+
+
+<div class="main_content">
+    <div class='title'><h2>Set your access data please</h2></div>
+    <div class='error_message'>{{error_found}}</div>
+    <form action="#" method="post" id="user_form">
+        {% csrf_token %}
+        <table border="0">
+                {% for field in form %}
+                <tr class="main_row">                    
+                    <th rowspan="2" width="35%">
+                        {{field.label_tag}}
+                    </th>
+                    <td width="35%">
+                        {{field.errors.as_ul}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                                {{field.as_widget}}
+                    </td>                    
+                </tr>
+                {% endfor %}            
+            <tr>
+                <td><input tabindex="19" autofocus="autofocus" type="Submit" value="Save" id="btnSubmit" title="Save Changes" class="myButton"></td>                                
+            </tr>	
+        </table
+    </form>
+</div> 
+{% endblock main_content %}

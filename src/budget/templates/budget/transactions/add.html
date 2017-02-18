@@ -1,0 +1,107 @@
+<div class="main_content">
+    <div class='title'><h2>Add Transaction(s)</h2></div>   
+    <script>
+        var rowNum = {{ max_row_num }};
+            
+        $("#ajax_form").submit(function (e)
+        {
+            var getData = $(this).serializeArray();
+            var formURL = $(this).attr("action");
+
+            var alertTitle = "Saved!";
+            var alertText = "All transactions are succesfully added!";
+
+
+            $.ajax(
+                    {
+                        url: formURL,
+                        type: "POST",
+                        data: getData,
+                        dataType: 'html',
+                        data_outp: content,
+                        error: function (jqXHR, textStatus, errorThrown)
+                        {
+                            //if fails     
+                        }
+                    })
+                    .done(function () {
+                        $(".overlay, .overlay-message").hide();
+                        swal({
+                            title: alertTitle,
+                            text: alertText,
+                            type: "success",
+                            showCancelButton: false,
+                            closeOnConfirm: true
+                        },
+                        function () {
+                            location.reload();
+                        });
+                    })
+                    .error(function () {
+                        sweetAlert("Oops...", "Something went wrong!", "error");
+                    });
+            e.preventDefault(); //STOP default action
+            e.unbind(); //unbind. to stop multiple form submit.
+        });
+    </script>
+    <form action="{% url 'budget:speicher_tr' %}" method="post" name="new_transactions" id="ajax_form">
+        {% csrf_token %}
+        <table>
+            <thead>
+                <tr>                    
+                    <th>
+                        Date
+                    </th>
+                    <th>
+                        Purpose
+                    </th>
+                    <th>
+                        Amount<small>*</small>
+                    </th>
+                    <th>
+                        Private&nbsp;&nbsp;&nbsp;
+                    </th>
+                    <th>
+                        Comment
+                    </th>
+                    <th>                   
+                    </th>                    
+                </tr>    
+                <tr>
+                    <th colspan="4" style="text-align: left;">
+                        <small>*</small> - Required fields
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="itemRows">
+                {% for r_num in rows_number %}
+                <tr id="rowNum{{ r_num }}">                    
+                    <td>
+                        <input autofocus="autofocus" autocomplete="on" placeholder="Date or empty for now" type="text" name="date" id="date" title="Date of the transaction">
+                    </td>
+                    <td>
+                        <input autocomplete="on" placeholder="Purpose" type="text" name="purpose" id="purpose" title="Purpose or Source">
+                    </td>
+                    <td>
+                        <input autocomplete="on" placeholder="Amount" required="required" type="number" step="0.01" name="amount" id="amount" title="Amount of the transaction">
+                    </td>
+                    <td style="text-align:center">
+                        <input type="checkbox" name="private" id="private" title="This transaction not to be shown in public budget">
+                    </td>
+                    <td>
+                        <textarea placeholder="comment" name="comment" id="comment" title="Free comment" rows="1" maxlength="255" wrap="soft"></textarea>
+                        <!--                        <input  placeholder="comment" type="text" name="comment" id="comment" title="Free comment">-->
+                    </td>
+<!--                    <td>
+                        <input type="button" name="add" id="add" value="+" class="addButton" onclick="addRow();">
+                    </td>-->
+                    <td><input type="button" value="X" onclick="removeRow({{ r_num }});" class="addButton"></td>
+                </tr>
+                {% endfor %}            
+            </tbody>
+            <tr>
+                <td><input type="Submit" value="Save" id="btnSubmit" title="Add Transaction(s)" class="myButton"></td>                
+            </tr>	
+        </table>
+    </form>
+</div> 

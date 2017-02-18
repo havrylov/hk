@@ -1,0 +1,24 @@
+{% extends "budget/base_templates/base_menu.html" %}
+
+{% load staticfiles %}
+{% block title %}Changes successfuly saved{% endblock title %}
+{% block misc %}
+    <meta http-equiv="refresh" content="5;URL={% url 'budget:main' %}">
+{% endblock misc %}
+{% block confirmations %}
+{% include "budget/base_templates/menu_confirmations.html" %}
+{% endblock confirmations %}
+{% block family_settings %}
+{% include "budget/base_templates/family_settings_items.html" %}
+{% endblock family_settings %} 
+{% block main_content %}
+<div>
+    <p>
+        The number of confirmation emails per day is limited and this limit is already reached. Tomorrow this will work again.
+    </p>
+    <p>
+        Now you will be redirected to main page. If it does not happen within 
+        10 seconds please click "HOME" in the menu.
+    </p>
+</div>
+{% endblock main_content%}

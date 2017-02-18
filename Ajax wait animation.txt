@@ -1,0 +1,2 @@
+http://stackoverflow.com/questions/1964839/jquery-please-wait-loading-animation 
+http://www.ajaxload.info/

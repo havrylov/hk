@@ -1,0 +1,58 @@
+{% load staticfiles %}
+<div class="col-md-3 side-bar">
+    <div class="logo text-center">
+        <a href="{% url 'budget:main' %}"><img src="{% static 'budget/images/logo2_short.png' %}" alt="" /></a>
+    </div>
+    <div class="navigation">
+        <h3>Transactions</h3>
+        <a href="{% url 'budget:add_tr_menu' %}" class="iframe overlayShow">
+            <ul>
+                <li><i class="page"></i></li>
+                <li><span class="likeLink">Add new</span></li>
+            </ul>
+        </a>
+<!--        <ul>
+            <li><a href="{% url 'budget:search' %}?public=1"><i class="dash"></i></a></li>
+            <li><a href="{% url 'budget:search' %}?public=1">Show all public transactions</a></li>
+        </ul>
+        <ul>
+            <li><a href="{% url 'budget:search' %}?private=1"><i class="dash"></i></a></li>
+            <li><a href="{% url 'budget:search' %}?private=1">Show all private transactions</a></li>
+        </ul>        -->
+        <ul>
+            <li><a href="{% url 'budget:search' %}?income=1"><i class="mail"></i></a></li>
+            <li><a href="{% url 'budget:search' %}?income=1">Incomes</a></li>
+        </ul>
+        <ul>
+            <li><a href="{% url 'budget:search' %}?outcome=1"><i class="cal"></i></a></li>
+            <li><a href="{% url 'budget:search' %}?outcome=1">Outcomes</a></li>
+        </ul>            
+        <ul>
+            <li><a href="{% url 'budget:search' %}?nosearch=1"><i class="art"></i></a></li>
+            <li><a href="{% url 'budget:search' %}?nosearch=1">Search</a></li>
+        </ul>
+        <ul>
+            <li><a href="{% url 'budget:search' %}?private=1"><i class="dash"></i></a></li>
+            <li><a href="{% url 'budget:graphics' %}">Visualisation</a></li>
+        </ul>
+    </div>
+    <div class="navigation">
+        <h3>All Others</h3>
+        <ul>
+            <li><a href="#"><i class="setting"></i></a></li>
+            <li><a href="#">Settings</a></li>
+        </ul>
+        <ul>
+            <li><a href="#"><i class="pic"></i></a></li>
+            <li><a href="#">Help</a></li>
+        </ul>
+        <ul>
+            <li><a href="#"><i class="faq"></i></a></li>
+            <li><a href="#">FAQs</a></li>
+        </ul>
+        <ul>
+            <li><a href="{% url 'budget:logout' %}"><i class="faq"></i></a></li>
+            <li><a href="{% url 'budget:logout' %}">Log Out</a></li>
+        </ul>                    
+    </div>
+</div>

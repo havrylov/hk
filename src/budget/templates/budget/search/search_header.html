@@ -1,0 +1,142 @@
+<form method="get" action="{% url 'budget:filter' %}" id="filter_settings">
+
+<!-- <form method="get" id="filter_settings"> -->
+
+    <table>
+        <tr>
+            <td> 
+                <span onclick='{
+                $("#filter").slideToggle("slow");
+                }' class="textAsLink">
+                    Hide/Show
+                </span>
+            </td>
+        </tr>
+        <tr id="filter">
+            <td>            
+                <table>
+<!--                    <tr>
+                        <td align="rigth">
+                            <label for="public" id="publicLabel">Show Public</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" name="public" id="public" title="This transaction will be shown in shared budget">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="rigth">
+                            <label for="private" id="privateLabel">Show Private</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" name="private" id="private" title="This transaction is not to be shown in shared budget">
+                        </td>
+                    </tr>-->
+                    <tr>
+                        <td colspan="1" align="right">
+                            <label for="period" id="periodlabel">Show results for</label>
+                        </td>
+                        <td colspan="1">
+                            <select name="period" id="period" onchange="setCorrectPeriod(this)">
+                                <option value="none" selected>all the time</option>
+                                <optgroup label="current">
+                                    <option value="curweek">current week</option>
+                                    <option value="curmonth">current month</option>
+                                    <option value="curyear">current year</option>
+                                </optgroup>
+                                <optgroup label="previous">
+                                    <option value="prevweek">previous week</option>
+                                    <option value="prevmonth">previous month</option>
+                                    <option value="prevyear">previous year</option>
+                                </optgroup>								
+                            </select>
+                        <td colspan="1" align="left">
+                            <label for="begin">or for the period</label></td>
+                        <td align="right">
+                            <label for="begin">from</label>
+                        </td>
+                        <td>
+                            <input autocomplete="on" type="datetime" size="17" name="begin" id="begin" title="The begin of the report period">
+                        </td>
+                        <td align="right">
+                            <label for="end">to</label>
+                        </td>
+                        <td>
+                            <input autocomplete="on" type="datetime" size="17" name="end" id="end" title="The end of the report period">
+                        </td>						
+                    </tr>
+                </table>				           
+                <table>
+
+                    <tr>
+                        <td valign="top"><label for="minamount">Amount is between</label></td>
+                        <td valign="top"><input type="number" id="minamount" name="minamount" size="7" step="0.01"></td>
+                        <td valign="top"><label for="maxamount">and</label></td>
+                        <td valign="top"><input type="number" id="maxamount" name="maxamount" size="7" step="0.01"></td>
+                        <td valign="top">
+                            <input checked type="checkbox" id="income" name="income" title="Income will be displayed">
+                            <label for="income">show income</label>
+                        </td>
+                        <td>
+                            <input checked type="checkbox" id="outcome" name="outcome" title="Outcome will be displayed">
+                            <label for="outcome">show outcome</label>
+                        </td>
+                    </tr>
+                </table>
+                <table border="0">
+                    <tr>
+                        <td valign="top" rowspan="2"><label for="users">Show only users:</label></td>
+                        <td valign="top" rowspan="2">
+                            <select name="users" id="users" multiple="multiple">
+                                {% for user_fam in user.get_all_members%}
+                                {% if user_fam == user %}
+                                <option value="{{user_fam.user.email}}">Me - {{user_fam.get_full_name}}</option>
+                                {% else %}
+                                <option value="{{user_fam.user.email}}">
+                                    {% for user1, pseudo in user.get_all_pseudos_except_mine.iteritems %}
+                                    {% if user1 == user_fam%}
+                                    {% if pseudo.pseudonym == ""%}
+                                    {{user_fam.get_full_name}}
+                                    {% else %}
+                                    {{pseudo.pseudonym}}
+                                    {% endif %}
+                                    {% endif %}
+                                    {% endfor %}
+                                </option>
+                                {% endif %}
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td valign="top">
+                            <label for="purpose">purpose/source</label>
+                        </td>
+                        <td valign="top">
+                            <select name="purposecomparation" id="purposecomparation">
+                                <option value="contains" selected>contains</option>
+                                <option value="equals">is equal to</option>
+                            </select>
+                        </td>
+                        <td valign="top"><input type="text" size="15" name="purpose" id="purpose" value=""></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">
+                            <label for="comment">comment</label>
+                        </td>
+                        <td valign="top">
+                            <select name="commentcomparation" id="commentcomparation">
+                                <option value="contains" selected>contains</option>
+                                <option value="equals">is equal to</option>
+                            </select>
+                        </td>
+                        <td valign="top">
+                            <input type="text" size="15" name="comment" id="comment" value="">
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td valign="top"><input type="submit" name="Filter" id="filter" value="Search"></td>              
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</form>

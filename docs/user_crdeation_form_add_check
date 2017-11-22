@@ -1,0 +1,4 @@
+email - is already registered?
+retypepassword - must match password
+family_email - exists or match email
+birthdate - age<=120

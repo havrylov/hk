@@ -2,7 +2,21 @@ from django.db import models
 from django.db.models import Min
 from django.contrib.auth.models import User
 from budget.transactions_filtering import order_transactions
+from budget.base_models import Transaction
 
+
+class Currency(models.Model):
+    short_name = models.CharField(max_length = 3, null=False, unique=True)
+    full_name = models.CharField(max_length = 128, null = False)
+    
+    @classmethod
+    def get_all_currencies_as_tuple(c):        
+        all_currencies = c.objects.all()
+        all_currencies_tuple = ()
+        for cur_currency in all_currencies:
+            currency_tuple = (cur_currency.short_name, cur_currency.full_name)
+            all_currencies_tuple = all_currencies_tuple + (currency_tuple, )
+        return all_currencies_tuple
 
 class Family(models.Model):
     founder = models.EmailField(max_length=255, unique=True)
@@ -248,19 +262,6 @@ class Users(models.Model):
                 settings_as_voc[setting_name] = setting_value[1]
         return settings_as_voc   
         
-class Currency(models.Model):
-    short_name = models.CharField(max_length = 3, null=False, unique=True)
-    full_name = models.CharField(max_length = 128, null = False)
-    
-    @classmethod
-    def get_all_currencies_as_tuple(c):        
-        all_currencies = c.objects.all()
-        all_currencies_tuple = ()
-        for cur_currency in all_currencies:
-            currency_tuple = (cur_currency.short_name, cur_currency.full_name)
-            all_currencies_tuple = all_currencies_tuple + (currency_tuple, )
-        return all_currencies_tuple          
-
 class ConfirmationData(models.Model):
     user = models.ForeignKey(Users)
     sentat = models.DateTimeField()
@@ -275,17 +276,12 @@ class ConfirmationData(models.Model):
     confirmation_password = 'password'
     confirmation_delete = 'delete'
     
-class PublicTransaction(models.Model):
+class PublicTransaction(Transaction):
 #     Class designed to store the information about each single 
 #     transaction that are visible to all other family members
-    
+
     user = models.ForeignKey(Users)
-    amount = models.DecimalField(max_digits=12, decimal_places=2)
-    currency = models.ForeignKey(Currency, default=Currency.objects.get(pk=1))
-    transactionstime = models.DateTimeField()
-    purpose = models.CharField(max_length = 255, blank = True)
-    comment = models.CharField(max_length = 255, blank = True, null = True)
-    deleted = models.BooleanField(default = False)
+    currency = models.ForeignKey(Currency, default="GUC")
     
     def is_private(self):
         return False
@@ -293,36 +289,12 @@ class PublicTransaction(models.Model):
     def is_public(self):
         return True
     
-    def is_income(self):
-        if self.amount >= 0:
-            return True
-        return False 
-    
-    def is_outcome(self):
-        return not self.is_income()
-    
-    def get_user(self):
-        return self.users.get_full_name()
-    
-    def show_local_time_presentation(self):
-        return self.transactionstime.strftime("%c")
-    
-    def __unicode__(self):
-        return self.purpose+";"+str(self.amount)+";"\
-            +str(self.transactionstime)
-    
-    
-class PrivatTransaction(models.Model):
+class PrivatTransaction(Transaction):
 #     Class designed to store the information about each single 
 #     transaction that are visible only to originator
     
     user = models.ForeignKey(Users)
-    amount = models.DecimalField(max_digits=12, decimal_places=2)
-    currency = models.ForeignKey(Currency, default=Currency.objects.get(pk=1))
-    transactionstime = models.DateTimeField()
-    purpose = models.CharField(max_length = 255)
-    comment = models.CharField(max_length = 255, blank = True, null = True)
-    deleted = models.BooleanField(default = False)
+    currency = models.ForeignKey(Currency, default="GUC")
     
     def is_private(self):
         return True
@@ -330,21 +302,6 @@ class PrivatTransaction(models.Model):
     def is_public(self):
         return False
     
-    def is_income(self):
-        if self.amount >= 0:
-            return True
-        return False 
-    
-    def is_outcome(self):
-        return not self.is_income()
-    
-    def get_user(self):
-        return self.users.get_full_name()
-    
-    def __unicode__(self):
-        return self.purpose+";"+str(self.amount)+";"\
-            +str(self.transactionstime)
-            
 class Pseudonym(models.Model):
     pseudonym = models.CharField(max_length = 15)
     of_the_user = models.ForeignKey(Users, related_name="of_user")

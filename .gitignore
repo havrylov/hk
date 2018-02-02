@@ -6,3 +6,10 @@ src/budget/models.pyc
 src/budget/transactions_filtering.pyc
 src/hk/__init__.pyc
 src/hk/settings.pyc
+src/test_data/__init__.pyc
+src/audit/__init__.pyc
+src/budget/__init__.pyc
+src/budget/models.pyc
+src/budget/transactions_filtering.pyc
+src/hk/__init__.pyc
+src/hk/settings.pyc
